@@ -1,0 +1,50 @@
+import { PresetStory } from '../types';
+
+export const PRESET_STORIES: PresetStory[] = [
+  {
+    id: 'gharial-ispa-symphony',
+    title: 'Gharial ISPA: The Sandbar Symphony',
+    genre: 'Bioacoustic Wildlife Cinema',
+    visualStyle: 'Photorealistic 35mm wildlife cinema, National Geographic realism, volumetric river mist, golden hour sandbar reflections, high dynamic range caustics',
+    logline: 'Two 8-week-old Golden Retriever puppies and an emerging juvenile Gharial explore an Indian riverbank, navigating the complete Interspecies Phonetic Alphabet (ISPA).',
+    prompt: 'A 10-minute bioacoustic wildlife short film on an Indian river sandbar. Two 8-week-old Golden Retriever puppies (Barnaby and Cleo) encounter a juvenile Gharial (Ganga). The soundtrack features STRICTLY puppy barks/yips/whines and the complete Gharial Interspecies Phonetic Alphabet (ISPA), spanning Hatching Synchronization (HC), Contact Calls (CC), Threat Hisses (HS), Distress Signals (DC), Growls (GW), Throat Grunts (GR), Mist Snorts (SN), Subaquatic Bubble Bursts (BB), Acoustic Jaw-Pops (POP), Substrate Infrasound (SAV), and Bellow Rolls (BR).',
+    thumbnail: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=800&auto=format&fit=crop&q=80',
+    ispaEnabled: true,
+  },
+  {
+    id: 'cyberpunk-neon-drifter',
+    title: 'Neon Drift: Echoes of Sector 9',
+    genre: 'Cyberpunk Noir Sci-Fi',
+    visualStyle: 'Cinematic Anamorphic, Rain-soaked Neon reflections, volumetric smog, 35mm film grain, Blade Runner aesthetic',
+    logline: 'In a vertical metropolis drenched in neon rain, a disgraced memory recovery agent retrieves a corrupted neuro-drive holding the final memory of the city’s architect.',
+    prompt: 'A gritty cyberpunk noir narrative in Neo-Kyoto. Agent Kaelen Vance, a cybernetic memory detective with glowing ocular implants, discovers an illegal memory canister in an abandoned subway terminal. He is pursued by Cipher-7, an elite android assassin with porcelain carbon-fiber plating, leading to a rooftop confrontation under torrential holographic rain where Kaelen activates the memory shard, projecting a glowing celestial revelation over the skyline.',
+    thumbnail: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'deep-ocean-leviathan',
+    title: 'Abyssal Horizon: The Trench Signal',
+    genre: 'Bioluminescent Sci-Fi Thriller',
+    visualStyle: 'Deep sea photorealism, glowing bioluminescent fauna, titanium submersibles, murky cyan depths, high atmospheric pressure particles',
+    logline: 'A marine biologist diving into the Mariana Trench aboard a research sub encounters an ancient organic titan that communicates through rhythmic pulses of light.',
+    prompt: 'A deep-sea science fiction thriller. Dr. Althea Rossi, pilot of the exploratory sub Nautilus-IV, descends past the midnight zone into a glowing trench. She spots ancient crystalline structures pulsating with golden light. An immense ethereal Leviathan with bioluminescent scales emerges from the darkness, initiating an exchange of harmonic sonar pulses that power up the submarine systems.',
+    thumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'solar-odyssey-chronicles',
+    title: 'Solaris Reach: The Solar Sailer',
+    genre: 'Hard Sci-Fi Space Opera',
+    visualStyle: 'Interstellar realism, golden solar sail reflections, zero-gravity dust drift, 70mm Panavision cosmic scale, Kubrick symmetry',
+    logline: 'As the outer solar storm breaches their orbital array, two deep-space astrophysicists align the mirror arrays of a monumental solar sailer to escape a supernova blast wave.',
+    prompt: 'A tense cosmic hard sci-fi odyssey. Commander Marcus Vance and AI Specialist Dr. Suki Sato work atop the shimmering golden solar mast of orbital station Helios. When a solar flare erupts into a dazzling corona of plasma, they manually align the photon sails, catching the stellar wind to catapult into deep space as the station reflects the supernova aurora.',
+    thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'alchemist-mythology',
+    title: 'The Clockwork Citadel of Aethelgard',
+    genre: 'Steampunk Fantasy Myth',
+    visualStyle: 'Intricate brass clockwork, glowing amber ether steam, Renaissance architectural grandeur, dramatic chiaroscuro lighting',
+    logline: 'An apprentice horologist uncovers a forbidden mechanical heart hidden inside the citadel’s grand astronomical clock tower that holds the power to rewind sunrise.',
+    prompt: 'A rich steampunk fantasy epic. Master Horologist Lysander and his daring rogue apprentice Lyra scale the towering gears of the Grand Celestial Clockwork. When the brass escapement mechanism fractures, Lyra places an incandescent ether crystal into the core gear, causing monumental mechanical rings to spin backwards as time ripples through the sky.',
+    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80',
+  },
+];

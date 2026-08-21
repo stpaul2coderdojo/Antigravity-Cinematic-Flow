@@ -1,0 +1,6 @@
+{
+  "name": "Antigravity Cinematic Flow",
+  "description": "Agentic narrative video studio using Google Antigravity agents to generate characters, act scenes, 10-second video clips, and splice them via Google Flow timeline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
