@@ -19,12 +19,14 @@ interface CinemaPlayerProps {
   project: StoryProject;
   initialSceneIndex?: number;
   onClose: () => void;
+  onOpenExportVideo?: () => void;
 }
 
 export const CinemaPlayer: React.FC<CinemaPlayerProps> = ({
   project,
   initialSceneIndex = 0,
   onClose,
+  onOpenExportVideo,
 }) => {
   // Collect all scenes in linear sequence (memoized)
   const allScenes = useMemo<Scene[]>(() => {
@@ -424,6 +426,18 @@ export const CinemaPlayer: React.FC<CinemaPlayerProps> = ({
             <span className="hidden sm:inline">Subtitles</span>
           </button>
 
+          {onOpenExportVideo && (
+            <button
+              id="btn-open-mp4-modal-player"
+              onClick={onOpenExportVideo}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/60 to-blue-900/60 hover:from-purple-800/80 hover:to-blue-800/80 text-purple-200 border border-purple-500/40 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_8px_rgba(168,85,247,0.3)] transition-all active:scale-95"
+              title="Open MP4 Video Exporter"
+            >
+              <Film className="w-3.5 h-3.5 text-purple-400" />
+              <span className="hidden sm:inline font-bold">MP4 Studio</span>
+            </button>
+          )}
+
           <button
             id="btn-export-spliced-video"
             onClick={handleExportRecording}
@@ -431,7 +445,7 @@ export const CinemaPlayer: React.FC<CinemaPlayerProps> = ({
             className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors shadow-[0_0_10px_rgba(59,130,246,0.4)] border border-blue-400/40"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{isExporting ? 'Recording WebM...' : 'Export Movie'}</span>
+            <span>{isExporting ? 'Recording WebM...' : 'Quick WebM'}</span>
           </button>
 
           <button

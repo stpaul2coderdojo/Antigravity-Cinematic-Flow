@@ -38,6 +38,7 @@ interface GoogleFlowSplicerProps {
   onGenerateAllVideos?: () => void;
   onGenerateAllImages?: () => void;
   onGenerateAllAudios?: () => void;
+  onOpenExportVideo?: () => void;
   isGeneratingVideos?: boolean;
   isGeneratingImages?: boolean;
   isGeneratingAudios?: boolean;
@@ -65,6 +66,7 @@ export const GoogleFlowSplicer: React.FC<GoogleFlowSplicerProps> = ({
   onGenerateAllVideos,
   onGenerateAllImages,
   onGenerateAllAudios,
+  onOpenExportVideo,
   isGeneratingVideos = false,
   isGeneratingImages = false,
   isGeneratingAudios = false,
@@ -179,6 +181,18 @@ export const GoogleFlowSplicer: React.FC<GoogleFlowSplicerProps> = ({
             </div>
             <div className="text-[9px] font-mono text-white/40 uppercase">Total Spliced Runtime</div>
           </div>
+
+          {onOpenExportVideo && (
+            <button
+              id="btn-open-export-video-splicer"
+              onClick={onOpenExportVideo}
+              className="px-3.5 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 text-xs font-mono font-semibold flex items-center gap-1.5 border border-purple-500/40 transition-all active:scale-95"
+              title="Render and download full project or marketing trailer as MP4 video"
+            >
+              <Video className="w-3.5 h-3.5 text-purple-400" />
+              <span>Generate MP4</span>
+            </button>
+          )}
 
           <button
             id="btn-play-flow-sequence"

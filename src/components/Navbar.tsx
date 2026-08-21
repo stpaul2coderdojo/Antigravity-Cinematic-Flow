@@ -1,5 +1,5 @@
 import React from 'react';
-import { Film, Sparkles, Play, Layers, Users, Clapperboard, Download, Check, RefreshCw, AlertCircle, RotateCcw } from 'lucide-react';
+import { Film, Sparkles, Play, Layers, Users, Clapperboard, Download, Check, RefreshCw, AlertCircle, RotateCcw, Video, Award } from 'lucide-react';
 import { StoryProject } from '../types';
 
 interface NavbarProps {
@@ -9,6 +9,8 @@ interface NavbarProps {
   onOpenAgentLogs: () => void;
   onPlayCinema: () => void;
   onExport: () => void;
+  onOpenExportVideo?: () => void;
+  onOpenJudgesGuide?: () => void;
   isGeneratingAny: boolean;
   saveStatus?: 'saved' | 'saving' | 'error' | 'idle';
   lastSavedText?: string;
@@ -22,6 +24,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAgentLogs,
   onPlayCinema,
   onExport,
+  onOpenExportVideo,
+  onOpenJudgesGuide,
   isGeneratingAny,
   saveStatus = 'saved',
   lastSavedText = 'All changes saved',
@@ -189,6 +193,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
+          {onOpenJudgesGuide && (
+            <button
+              id="btn-hackathon-judges-guide"
+              onClick={onOpenJudgesGuide}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 via-amber-500/30 to-amber-600/20 hover:from-amber-500/30 hover:to-amber-600/30 text-amber-300 border border-amber-500/50 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_12px_rgba(245,158,11,0.25)] transition-all active:scale-95 animate-pulse"
+              title="Agentic Cinema Hackathon Judges Guide & Architecture"
+            >
+              <Award className="w-3.5 h-3.5 text-amber-400" />
+              <span>Judges Guide</span>
+            </button>
+          )}
+
           {project && (
             <button
               id="btn-agent-logs"
@@ -201,6 +217,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
+          {project && onOpenExportVideo && (
+            <button
+              id="btn-generate-mp4-navbar"
+              onClick={onOpenExportVideo}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/60 to-blue-900/60 hover:from-purple-800/80 hover:to-blue-800/80 text-purple-200 border border-purple-500/40 text-[11px] font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_8px_rgba(168,85,247,0.3)] transition-all active:scale-95"
+              title="Render & Download MP4 Video"
+            >
+              <Video className="w-3.5 h-3.5 text-purple-400" />
+              <span className="hidden sm:inline font-bold">Generate MP4</span>
+            </button>
+          )}
+
           {project && (
             <button
               id="btn-export-project"
@@ -209,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               title="Export Project & Spliced Timeline"
             >
               <Download className="w-3.5 h-3.5 text-white/60" />
-              <span className="hidden sm:inline">Export</span>
+              <span className="hidden sm:inline">JSON</span>
             </button>
           )}
 

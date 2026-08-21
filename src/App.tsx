@@ -8,6 +8,8 @@ import { GoogleFlowSplicer } from './components/GoogleFlowSplicer';
 import { CinemaPlayer } from './components/CinemaPlayer';
 import { AgentStatusModal } from './components/AgentStatusModal';
 import { UploadActsModal } from './components/UploadActsModal';
+import { ExportVideoModal } from './components/ExportVideoModal';
+import { HackathonJudgesModal } from './components/HackathonJudgesModal';
 import { PRESET_STORIES } from './data/presets';
 import { INITIAL_PROJECT } from './data/initialProject';
 import { Sparkles, Film, Wand2, Layers, Download, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -88,6 +90,8 @@ export default function App() {
   const [isAgentLogsOpen, setIsAgentLogsOpen] = useState(false);
   const [isCinemaPlayerOpen, setIsCinemaPlayerOpen] = useState(false);
   const [isUploadActsModalOpen, setIsUploadActsModalOpen] = useState(false);
+  const [isExportVideoModalOpen, setIsExportVideoModalOpen] = useState(false);
+  const [isJudgesGuideOpen, setIsJudgesGuideOpen] = useState(false);
   const [cinemaStartSceneIndex, setCinemaStartSceneIndex] = useState(0);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
@@ -96,6 +100,30 @@ export default function App() {
     setTimeout(() => {
       setNotification(null);
     }, 4000);
+  };
+
+  // Quick Preset Loader for Judges & Users
+  const handleLoadPreset = (presetId: string) => {
+    const targetPreset = PRESET_STORIES.find((p) => p.id === presetId);
+    if (!targetPreset) return;
+
+    if (targetPreset.id === 'gharial-ispa-symphony') {
+      setProject(INITIAL_PROJECT);
+      setActiveTab('flow');
+      showToast('Loaded "Gharial ISPA Sandbar Symphony" blueprint for judging', 'success');
+      return;
+    }
+
+    // Generate quick story from preset parameters
+    handleGenerateStory(
+      targetPreset.prompt,
+      targetPreset.visualStyle,
+      targetPreset.genre,
+      3,
+      2
+    );
+    setActiveTab('flow');
+    showToast(`Generating "${targetPreset.title}" narrative timeline...`, 'info');
   };
 
   // Debounced Auto-Save to Local Storage
@@ -806,6 +834,8 @@ export default function App() {
           setIsCinemaPlayerOpen(true);
         }}
         onExport={handleExportProject}
+        onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
+        onOpenJudgesGuide={() => setIsJudgesGuideOpen(true)}
         isGeneratingAny={isGeneratingStory || isGeneratingImages || isGeneratingVideos || isGeneratingAudios}
         saveStatus={saveStatus}
         lastSavedText={lastSavedText}
@@ -818,6 +848,7 @@ export default function App() {
           <StoryPromptBar
             onGenerate={handleGenerateStory}
             isGenerating={isGeneratingStory}
+            onOpenJudgesGuide={() => setIsJudgesGuideOpen(true)}
           />
         )}
 
@@ -890,6 +921,7 @@ export default function App() {
             onGenerateAllVideos={handleGenerateAllVideos}
             onGenerateAllImages={handleGenerateAllImages}
             onGenerateAllAudios={handleGenerateAllAudios}
+            onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
             isGeneratingVideos={isGeneratingVideos}
             isGeneratingImages={isGeneratingImages}
             isGeneratingAudios={isGeneratingAudios}
@@ -917,6 +949,16 @@ export default function App() {
           project={project}
           initialSceneIndex={cinemaStartSceneIndex}
           onClose={() => setIsCinemaPlayerOpen(false)}
+          onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
+        />
+      )}
+
+      {/* Export MP4 Video Modal */}
+      {isExportVideoModalOpen && project && (
+        <ExportVideoModal
+          project={project}
+          isOpen={isExportVideoModalOpen}
+          onClose={() => setIsExportVideoModalOpen(false)}
         />
       )}
 
@@ -939,6 +981,19 @@ export default function App() {
           isGenerating={isGeneratingStory}
         />
       )}
+
+      {/* Hackathon Judges Interactive Guide Modal */}
+      <HackathonJudgesModal
+        isOpen={isJudgesGuideOpen}
+        onClose={() => setIsJudgesGuideOpen(false)}
+        onLoadPreset={handleLoadPreset}
+        onOpenCinema={() => {
+          setCinemaStartSceneIndex(0);
+          setIsCinemaPlayerOpen(true);
+        }}
+        onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
+        project={project}
+      />
 
       {/* Floating Toast Notification */}
       {notification && (
