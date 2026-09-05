@@ -1258,6 +1258,159 @@ ${rawText.trim().length > 20 ? `Extracted Screenplay Text:\n"""\n${rawText.slice
   }
 });
 
+// 7. Google Veo Judges Walkthrough Generation Endpoint
+app.all("/api/veo/walkthrough", async (req: Request, res: Response) => {
+  try {
+    const customFocus = req.body?.customFocus || req.query?.customFocus as string || "";
+    const voice = req.body?.voice || req.query?.voice as string || "Charon";
+    const generateAudio = req.body?.generateAudio !== false;
+
+    const baseChapters = [
+      {
+        id: "veo-ch-1",
+        chapterNumber: 1,
+        title: "The Agentic Breakthrough",
+        subtitle: "Autonomous Screenplay & Dramatic Arc Decomposition",
+        category: "Google Antigravity Agent Swarm",
+        veoPrompt: "Cinematic 35mm anamorphic flythrough of a futuristic holographic director's suite, glowing translucent storyboard displays showing Three-Act screenplay structures floating in volumetric twilight haze, subtle dust particles catching anamorphic lens flare, photorealistic 8K, 60fps continuous camera move.",
+        cameraDirection: "Slow 35mm anamorphic crane push-in, transitioning from high-angle wide perspective into intimate eye-level view of glowing timeline nodes.",
+        focalLength: "35mm Panavision C-Series",
+        lensType: "2.39:1 Anamorphic Prime T1.9",
+        motionVector: "Pedestal Down + Slow Dolly Forward (0.8 m/s)",
+        directorCommentary: "Welcome esteemed judges. The fatal flaw of generative video has always been narrative discontinuity—disjointed 4-second clips without soul or structure. Antigravity Cinematic Flow solves this. Autonomous Google Antigravity agents orchestrate a complete Three-Act screenplay, locking story pacing, dramatic stakes, and 10-second scene bounds before rendering.",
+        audioVoice: "Charon" as const,
+        keyTakeaway: "Zero-shot agentic transformation of one-line prompts into rigorous 3-Act cinematic architectures.",
+        duration: 10,
+      },
+      {
+        id: "veo-ch-2",
+        chapterNumber: 2,
+        title: "Identity Persistence via Nano Banana",
+        subtitle: "Biometric & Costume Consistency Across Narrative Cuts",
+        category: "Character Forge & Image Synthesis",
+        veoPrompt: "Ultra-detailed 50mm portrait tracking shot of a cinematic character illuminated by alternating golden-hour rim light and moody cyan neon, facial features and tailored costume textures remaining perfectly constant across shifting camera perspectives, shallow depth of field, 8K photorealism.",
+        cameraDirection: "Smooth 180-degree semicircular orbital dolly around the character, maintaining strict focal lock on eye level with delicate cinematic rack focus.",
+        focalLength: "50mm Leica Noctilux",
+        lensType: "Spherical T0.95 Portrait Prime",
+        motionVector: "Orbital Pan Right (12°/s) + Micro Push-In",
+        directorCommentary: "A cinematic story dies the moment characters morph between scenes. Our Character Forge agent constructs a persistent biometric and psychological bible. Using Nano Banana, facial features, attire silhouettes, and lighting profiles are locked into image seeds, ensuring identical character identity across every cut.",
+        audioVoice: "Kore" as const,
+        keyTakeaway: "Persistent multi-modal character bibles preventing the dreaded AI character drift across scenes.",
+        duration: 10,
+      },
+      {
+        id: "veo-ch-3",
+        chapterNumber: 3,
+        title: "Google Veo 10-Second Continuous Framing",
+        subtitle: "Cinematic Camera Vectors, Lens Physics & Volumetrics",
+        category: "Google Veo Video Engine",
+        veoPrompt: "Epic 10-second continuous tracking shot following an action beat across a sprawling cinematic environment, rain-slicked pavement reflecting volumetric neon, dynamic camera physics responding to subject momentum, anamorphic streak flares, high dynamic range 60fps master footage.",
+        cameraDirection: "Low-angle dynamic tracking shot with Steadicam fluidity, moving parallel with subject velocity before sweeping into an upward Dutch angle reveal.",
+        focalLength: "28mm Cooke Anamorphic/i",
+        lensType: "Anamorphic Special Flare Prime",
+        motionVector: "Tracking Forward + Low-to-High Tilt (+25°)",
+        directorCommentary: "For video generation, the 10-Second Scene Framer compiles specialized mathematical prompts for Google Veo. Instead of unpredictable motion blur, Veo receives precise physical camera vectors, shutter timings, and volumetric lighting requirements to render continuous, cinematic 10-second narrative scenes.",
+        audioVoice: "Zephyr" as const,
+        keyTakeaway: "Full 10-second continuous scenes rendered with deliberate optical camera trajectories.",
+        duration: 10,
+      },
+      {
+        id: "veo-ch-4",
+        chapterNumber: 4,
+        title: "Google Flow Multi-Track Non-Linear Splicer",
+        subtitle: "Real-Time Timeline Sequencing, Transitions & LUT Color Grading",
+        category: "Google Flow Editorial Suite",
+        veoPrompt: "Macro probe lens glide through a high-precision digital audio workstation and video editing timeline, multiple glowing tracks of video, synchronized voice waveforms, and real-time color grading LUT ripples sweeping across clips seamlessly, cinematic lighting, 4K depth of field.",
+        cameraDirection: "Linear horizontal track across the editing timeline tracks, seamlessly accelerating and decelerating to highlight transition markers and audio sync lines.",
+        focalLength: "24mm Laowa 2X Macro Probe",
+        lensType: "Specialty Macro Probe Optics",
+        motionVector: "Linear Truck Right (1.2 m/s) with 5° Cant",
+        directorCommentary: "The Google Flow Timeline Splicer is where the movie comes together. Directors have non-linear control: reordering scenes, fine-tuning transitions like whip-pans and dissolves, auditioning synchronized voice tracks, and applying global cinematic color LUTs in real time without re-rendering.",
+        audioVoice: "Fenrir" as const,
+        keyTakeaway: "Interactive non-linear multi-track timeline putting true editorial direction into the creator's hands.",
+        duration: 10,
+      },
+      {
+        id: "veo-ch-5",
+        chapterNumber: 5,
+        title: "21:9 Anamorphic Cinema Suite & MP4 Export",
+        subtitle: "Theatrical Ultrawide Master Screening & Direct Video Export",
+        category: "Master Delivery & Telemetry HUD",
+        veoPrompt: "Majestic wide shot inside a premier IMAX screening theater, the curved 21:9 anamorphic screen illuminating the room with high-contrast cinematic imagery, real-time optic telemetry HUD and bioacoustic waveforms dancing across the perimeter, ultra-luxurious dark ambiance.",
+        cameraDirection: "Slow center-axis dolly pull-back down the central theater aisle, framing the expansive 21:9 screen against dark acoustically treated architectural walls.",
+        focalLength: "40mm ARRI Rental Prime 65",
+        lensType: "Large Format Cinema Prime",
+        motionVector: "Center Dolly Back (-0.5 m/s) with Steady Elevation",
+        directorCommentary: "Finally, the 21:9 Anamorphic Cinema Suite delivers theatrical screening. Complete with live optic HUD telemetry, frequency analyzers, and synchronized multi-track dialogue. With one click, the client-side rendering pipeline encodes a production-grade MP4 video ready for festivals, distribution, or hackathon judging.",
+        audioVoice: "Puck" as const,
+        keyTakeaway: "21:9 Ultrawide anamorphic cinema player with live telemetry and instant studio-grade MP4 export.",
+        duration: 10,
+      }
+    ];
+
+    // If custom focus requested and AI available, personalize chapters using Gemini 3.7 Flash
+    let chapters = baseChapters;
+    if (customFocus && customFocus.trim().length > 3) {
+      try {
+        const ai = getGenAI();
+        const response = await ai.models.generateContent({
+          model: "gemini-3.7-flash",
+          contents: [{
+            parts: [{
+              text: `You are the Google Veo Cinema Director. Tailor the following 5-chapter walkthrough specifically for hackathon judges with a focus on: "${customFocus}".
+Return a JSON array of 5 chapters with fields: id, chapterNumber, title, subtitle, category, veoPrompt, cameraDirection, focalLength, lensType, motionVector, directorCommentary, audioVoice (one of 'Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr'), keyTakeaway, duration (10).`
+            }]
+          }],
+          config: {
+            responseMimeType: "application/json"
+          }
+        });
+
+        if (response.text) {
+          const parsed = JSON.parse(response.text);
+          if (Array.isArray(parsed) && parsed.length === 5) {
+            chapters = parsed.map((ch: any, idx: number) => ({
+              ...baseChapters[idx],
+              ...ch,
+              chapterNumber: idx + 1,
+              duration: 10,
+            }));
+          }
+        }
+      } catch (err: any) {
+        console.warn("Could not customize walkthrough with AI, using curated baseline:", err.message);
+      }
+    }
+
+    // Assign high-aesthetic SVG keyframe visuals to chapters
+    const enrichedChapters = chapters.map((ch) => {
+      const visualUrl = generateCinematicKeyframeSvg(
+        `${ch.title}: ${ch.veoPrompt}`,
+        "16:9",
+        "Cinematic Anamorphic 35mm, High-Contrast Masterpiece"
+      );
+      return {
+        ...ch,
+        imageUrl: visualUrl,
+      };
+    });
+
+    res.json({
+      success: true,
+      title: "Google Veo Hackathon Judges Walkthrough",
+      tagline: "Agentic Cinema Devpost Hackathon 2026 Interactive Video Tour",
+      focus: customFocus || "Comprehensive Multi-Agent Architecture & Veo Integration",
+      totalChapters: enrichedChapters.length,
+      totalDurationSeconds: enrichedChapters.length * 10,
+      aspectRatio: "2.39:1 (Anamorphic 21:9)",
+      chapters: enrichedChapters,
+    });
+  } catch (error: any) {
+    console.error("Error generating Veo walkthrough:", error);
+    res.status(500).json({ error: error.message || "Failed to generate Veo walkthrough" });
+  }
+});
+
 // Start Express and Vite server
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {

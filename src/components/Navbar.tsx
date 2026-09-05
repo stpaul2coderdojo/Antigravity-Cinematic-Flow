@@ -11,6 +11,7 @@ interface NavbarProps {
   onExport: () => void;
   onOpenExportVideo?: () => void;
   onOpenJudgesGuide?: () => void;
+  onOpenVeoWalkthrough?: () => void;
   isGeneratingAny: boolean;
   saveStatus?: 'saved' | 'saving' | 'error' | 'idle';
   lastSavedText?: string;
@@ -26,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onExport,
   onOpenExportVideo,
   onOpenJudgesGuide,
+  onOpenVeoWalkthrough,
   isGeneratingAny,
   saveStatus = 'saved',
   lastSavedText = 'All changes saved',
@@ -202,6 +204,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <Award className="w-3.5 h-3.5 text-amber-400" />
               <span>Judges Guide</span>
+            </button>
+          )}
+
+          {onOpenVeoWalkthrough && (
+            <button
+              id="btn-veo-walkthrough-navbar"
+              onClick={onOpenVeoWalkthrough}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-600/30 via-blue-600/30 to-purple-600/30 hover:from-cyan-500/40 hover:to-blue-500/40 text-cyan-300 border border-cyan-500/50 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_12px_rgba(6,182,212,0.25)] transition-all active:scale-95"
+              title="Launch Google Veo Walkthrough for Judges"
+            >
+              <Video className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Veo Walkthrough</span>
             </button>
           )}
 

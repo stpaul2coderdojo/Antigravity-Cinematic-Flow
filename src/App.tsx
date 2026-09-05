@@ -10,6 +10,7 @@ import { AgentStatusModal } from './components/AgentStatusModal';
 import { UploadActsModal } from './components/UploadActsModal';
 import { ExportVideoModal } from './components/ExportVideoModal';
 import { HackathonJudgesModal } from './components/HackathonJudgesModal';
+import { VeoJudgesWalkthroughModal } from './components/VeoJudgesWalkthroughModal';
 import { PRESET_STORIES } from './data/presets';
 import { INITIAL_PROJECT } from './data/initialProject';
 import { Sparkles, Film, Wand2, Layers, Download, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -92,6 +93,7 @@ export default function App() {
   const [isUploadActsModalOpen, setIsUploadActsModalOpen] = useState(false);
   const [isExportVideoModalOpen, setIsExportVideoModalOpen] = useState(false);
   const [isJudgesGuideOpen, setIsJudgesGuideOpen] = useState(false);
+  const [isVeoWalkthroughOpen, setIsVeoWalkthroughOpen] = useState(false);
   const [cinemaStartSceneIndex, setCinemaStartSceneIndex] = useState(0);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
@@ -836,6 +838,7 @@ export default function App() {
         onExport={handleExportProject}
         onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
         onOpenJudgesGuide={() => setIsJudgesGuideOpen(true)}
+        onOpenVeoWalkthrough={() => setIsVeoWalkthroughOpen(true)}
         isGeneratingAny={isGeneratingStory || isGeneratingImages || isGeneratingVideos || isGeneratingAudios}
         saveStatus={saveStatus}
         lastSavedText={lastSavedText}
@@ -849,6 +852,7 @@ export default function App() {
             onGenerate={handleGenerateStory}
             isGenerating={isGeneratingStory}
             onOpenJudgesGuide={() => setIsJudgesGuideOpen(true)}
+            onOpenVeoWalkthrough={() => setIsVeoWalkthroughOpen(true)}
           />
         )}
 
@@ -992,7 +996,19 @@ export default function App() {
           setIsCinemaPlayerOpen(true);
         }}
         onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
+        onOpenVeoWalkthrough={() => setIsVeoWalkthroughOpen(true)}
         project={project}
+      />
+
+      {/* Google Veo Hackathon Judges Walkthrough Modal */}
+      <VeoJudgesWalkthroughModal
+        isOpen={isVeoWalkthroughOpen}
+        onClose={() => setIsVeoWalkthroughOpen(false)}
+        onOpenCinema={() => {
+          setCinemaStartSceneIndex(0);
+          setIsCinemaPlayerOpen(true);
+        }}
+        onOpenExportVideo={() => setIsExportVideoModalOpen(true)}
       />
 
       {/* Floating Toast Notification */}

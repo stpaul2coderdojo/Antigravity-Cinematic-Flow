@@ -128,3 +128,23 @@ export interface PresetStory {
   thumbnail: string;
   ispaEnabled?: boolean;
 }
+
+export interface VeoWalkthroughChapter {
+  id: string;
+  chapterNumber: number;
+  title: string;
+  subtitle: string;
+  category: string;
+  veoPrompt: string;
+  cameraDirection: string;
+  focalLength: string;
+  lensType: string;
+  motionVector: string;
+  directorCommentary: string;
+  audioVoice: VoiceName;
+  audioUrl?: string;
+  videoUrl?: string;
+  imageUrl?: string;
+  keyTakeaway: string;
+  duration: number;
+}

@@ -27,6 +27,7 @@ interface HackathonJudgesModalProps {
   onLoadPreset: (presetId: string) => void;
   onOpenCinema: () => void;
   onOpenExportVideo: () => void;
+  onOpenVeoWalkthrough?: () => void;
   project: StoryProject | null;
 }
 
@@ -36,9 +37,10 @@ export const HackathonJudgesModal: React.FC<HackathonJudgesModalProps> = ({
   onLoadPreset,
   onOpenCinema,
   onOpenExportVideo,
+  onOpenVeoWalkthrough,
   project,
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'rubric' | 'tour'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'rubric' | 'tour' | 'veo'>('overview');
 
   if (!isOpen) return null;
 
@@ -123,6 +125,18 @@ export const HackathonJudgesModal: React.FC<HackathonJudgesModalProps> = ({
           >
             <Play className="w-4 h-4" />
             4. Instant 1-Click Judge Tour
+          </button>
+
+          <button
+            onClick={() => setActiveTab('veo')}
+            className={`px-4 py-2.5 text-xs font-mono font-bold uppercase tracking-wider rounded-t-lg transition-all flex items-center gap-2 border-b-2 ${
+              activeTab === 'veo'
+                ? 'border-cyan-400 text-cyan-300 bg-cyan-500/10'
+                : 'border-transparent text-white/50 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Video className="w-4 h-4 text-cyan-400" />
+            5. Google Veo Walkthrough
           </button>
         </div>
 
@@ -372,6 +386,121 @@ export const HackathonJudgesModal: React.FC<HackathonJudgesModalProps> = ({
                   Render & Download MP4 Trailer
                 </button>
               </div>
+            </div>
+          )}
+
+          {/* TAB 5: GOOGLE VEO WALKTHROUGH */}
+          {activeTab === 'veo' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-purple-950/40 border border-cyan-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[10px] font-mono font-bold uppercase">
+                      Google Veo Engine
+                    </span>
+                    <span className="text-white/40 text-xs font-mono">10s Continuous Shots • 60 FPS</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white tracking-tight">
+                    Interactive Google Veo Walkthrough for Hackathon Judges
+                  </h3>
+                  <p className="text-xs text-white/70 max-w-2xl leading-relaxed">
+                    Experience an autonomous 5-chapter cinematic walkthrough generated using Google Veo video prompts, 21:9 anamorphic camera physics, and synchronized Gemini voice narration.
+                  </p>
+                </div>
+
+                {onOpenVeoWalkthrough && (
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenVeoWalkthrough();
+                    }}
+                    className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all shrink-0"
+                  >
+                    <Video className="w-4 h-4 fill-current" />
+                    Launch Interactive Veo Tour
+                  </button>
+                )}
+              </div>
+
+              {/* The 5 Veo Walkthrough Chapters */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-mono font-bold text-cyan-300 uppercase tracking-wider flex items-center gap-2">
+                  <Film className="w-4 h-4" />
+                  The 5 Core Chapters of the Google Veo Walkthrough
+                </h4>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-cyan-400">CHAPTER 01</span>
+                      <span className="text-[10px] font-mono text-white/40">35mm Panavision</span>
+                    </div>
+                    <h5 className="font-bold text-white text-xs">The Agentic Breakthrough</h5>
+                    <p className="text-white/60 text-xs leading-relaxed">
+                      How autonomous Google Antigravity agents solve narrative discontinuity by decomposing loglines into 3-Act structures and 10-second scene bounds before rendering.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-amber-400">CHAPTER 02</span>
+                      <span className="text-[10px] font-mono text-white/40">50mm Noctilux</span>
+                    </div>
+                    <h5 className="font-bold text-white text-xs">Identity Persistence via Nano Banana</h5>
+                    <p className="text-white/60 text-xs leading-relaxed">
+                      Locks biometric features, costume silhouettes, and psychological traits into multi-modal character bibles, preventing AI character drift between cuts.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-emerald-400">CHAPTER 03</span>
+                      <span className="text-[10px] font-mono text-white/40">28mm Cooke Anamorphic</span>
+                    </div>
+                    <h5 className="font-bold text-white text-xs">Google Veo 10-Second Continuous Framing</h5>
+                    <p className="text-white/60 text-xs leading-relaxed">
+                      Synthesizes precise mathematical camera trajectories (dolly, pedestal, truck) and volumetric lighting into 10-second continuous scenes.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-purple-400">CHAPTER 04</span>
+                      <span className="text-[10px] font-mono text-white/40">24mm Macro Probe</span>
+                    </div>
+                    <h5 className="font-bold text-white text-xs">Google Flow Multi-Track Splicer</h5>
+                    <p className="text-white/60 text-xs leading-relaxed">
+                      Non-linear editorial suite: adjust transition durations, crossfades, whip-pans, dialogue audio tracks, and real-time color LUTs without re-rendering.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2 md:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold text-red-400">CHAPTER 05</span>
+                      <span className="text-[10px] font-mono text-white/40">40mm ARRI Rental Prime 65</span>
+                    </div>
+                    <h5 className="font-bold text-white text-xs">21:9 Anamorphic Cinema Master & One-Click MP4 Export</h5>
+                    <p className="text-white/60 text-xs leading-relaxed">
+                      Screen the master film in ultrawide 2.39:1 with live optic telemetry, bioacoustic frequency visualizers, and encode production-ready MP4 files in-browser.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {onOpenVeoWalkthrough && (
+                <div className="pt-2 flex justify-center">
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenVeoWalkthrough();
+                    }}
+                    className="w-full sm:w-auto px-8 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(6,182,212,0.4)] transition-all"
+                  >
+                    <Video className="w-4 h-4 fill-current" />
+                    Open Fullscreen Google Veo Walkthrough Player
+                  </button>
+                </div>
+              )}
             </div>
           )}
 

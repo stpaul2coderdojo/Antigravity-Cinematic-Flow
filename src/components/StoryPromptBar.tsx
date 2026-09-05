@@ -7,6 +7,7 @@ interface StoryPromptBarProps {
   onGenerate: (prompt: string, visualStyle: string, genre: string, targetActs: number, scenesPerAct: number) => void;
   isGenerating: boolean;
   onOpenJudgesGuide?: () => void;
+  onOpenVeoWalkthrough?: () => void;
 }
 
 const VISUAL_STYLES = [
@@ -31,6 +32,7 @@ export const StoryPromptBar: React.FC<StoryPromptBarProps> = ({
   onGenerate,
   isGenerating,
   onOpenJudgesGuide,
+  onOpenVeoWalkthrough,
 }) => {
   const [prompt, setPrompt] = useState(PRESET_STORIES[0].prompt);
   const [selectedStyle, setSelectedStyle] = useState(VISUAL_STYLES[0]);
@@ -80,14 +82,27 @@ export const StoryPromptBar: React.FC<StoryPromptBarProps> = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={onOpenJudgesGuide}
-            className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_0_12px_rgba(245,158,11,0.4)] transition-all active:scale-95 shrink-0"
-          >
-            <Zap className="w-3.5 h-3.5 fill-current" />
-            <span>Open Judges Guide</span>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            {onOpenVeoWalkthrough && (
+              <button
+                type="button"
+                onClick={onOpenVeoWalkthrough}
+                className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:from-cyan-500/40 hover:to-blue-500/40 text-cyan-300 border border-cyan-500/40 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_12px_rgba(6,182,212,0.25)] transition-all active:scale-95"
+              >
+                <Film className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Veo Walkthrough</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={onOpenJudgesGuide}
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_0_12px_rgba(245,158,11,0.4)] transition-all active:scale-95 shrink-0"
+            >
+              <Zap className="w-3.5 h-3.5 fill-current" />
+              <span>Open Judges Guide</span>
+            </button>
+          </div>
         </div>
       )}
 
