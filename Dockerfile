@@ -6,13 +6,13 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies (including devDependencies needed for build)
-RUN npm ci || npm install
+# Install all dependencies required to build frontend & backend bundle
+RUN npm install
 
 # Copy application source code
 COPY . .
 
-# Build Vite frontend and bundled server
+# Build Vite frontend and bundled server (creates /app/dist/...)
 RUN npm run build
 
 # Production runtime stage
@@ -25,11 +25,13 @@ ENV PORT=3000
 
 # Copy package files for production dependency install
 COPY package*.json ./
-RUN npm ci --omit=dev || npm install --omit=dev
+RUN npm install --omit=dev
 
-# Copy built assets from builder stage
+# Copy built assets and server bundle from builder stage
 COPY --from=builder /app/dist ./dist
 
+# Expose application port
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# Run compiled Express production server directly
+CMD ["node", "dist/server.cjs"]

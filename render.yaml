@@ -1,11 +1,11 @@
 services:
   - type: web
     name: antigravity-cinematic-studio
-    runtime: node
+    runtime: docker
     plan: free
     region: oregon
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
