@@ -2,6 +2,10 @@
 
 > **Agentic Narrative Video Studio powered by Google Antigravity Agents, Google Flow Timeline Splicer, Nano Banana Image Generation, and Veo / Omni Video Synthesis.**
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node: >=18.0.0](https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg)](https://nodejs.org/)
+
 ---
 
 ## 🌟 Overview
@@ -199,8 +203,8 @@ sequenceDiagram
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/antigravity-cinematic-flow.git
-cd antigravity-cinematic-flow
+git clone https://github.com/stpaul2coderdojo/Antigravity-Cinematic-Flow.git
+cd Antigravity-Cinematic-Flow
 ```
 
 ### 2. Environment Configuration
@@ -225,6 +229,30 @@ Open your browser at `http://localhost:3000` to launch the Antigravity Cinematic
 npm run build
 npm start
 ```
+
+---
+
+## ☁️ Deploy to Render
+
+Antigravity Cinematic Flow Studio is fully configured for continuous deployment on [Render](https://render.com).
+
+### Method 1: 1-Click Blueprint (Recommended)
+1. Fork or push this repository to your GitHub account.
+2. In the [Render Dashboard](https://dashboard.render.com), click **New +** > **Blueprint**.
+3. Select this repository. Render automatically reads `render.yaml`.
+4. Enter your `GEMINI_API_KEY` (from [Google AI Studio](https://aistudio.google.com/)).
+5. Click **Apply** to deploy.
+
+### Method 2: Manual Web Service
+- **Runtime**: `Node`
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
+- **Health Check Path**: `/api/health`
+- **Environment Variables**:
+  - `NODE_ENV`: `production`
+  - `GEMINI_API_KEY`: `your_gemini_api_key`
+
+For detailed setup instructions, troubleshooting, and container options, see [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md).
 
 ---
 
