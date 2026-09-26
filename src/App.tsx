@@ -11,6 +11,7 @@ import { UploadActsModal } from './components/UploadActsModal';
 import { ExportVideoModal } from './components/ExportVideoModal';
 import { HackathonJudgesModal } from './components/HackathonJudgesModal';
 import { VeoJudgesWalkthroughModal } from './components/VeoJudgesWalkthroughModal';
+import { LaunchSite } from './components/LaunchSite';
 import { PRESET_STORIES } from './data/presets';
 import { INITIAL_PROJECT } from './data/initialProject';
 import { Sparkles, Film, Wand2, Layers, Download, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -18,6 +19,7 @@ import { Sparkles, Film, Wand2, Layers, Download, CheckCircle2, AlertCircle } fr
 const STORAGE_KEY = 'antigravity_flow_project_v1';
 
 export default function App() {
+  const [showLaunch, setShowLaunch] = useState(() => window.location.hash !== '#studio');
   const [project, setProject] = useState<StoryProject | null>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -816,6 +818,16 @@ export default function App() {
     a.click();
     showToast('Exported narrative project JSON', 'success');
   };
+
+  if (showLaunch) {
+    return (
+      <LaunchSite onEnterStudio={() => {
+        window.history.replaceState(null, '', '#studio');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        setShowLaunch(false);
+      }} />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#F0F0F0] flex flex-col font-sans selection:bg-blue-500 selection:text-white">
